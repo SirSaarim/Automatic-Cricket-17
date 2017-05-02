@@ -1,0 +1,227 @@
+<HTML>
+<!Foundation Page for building our JavaScript programs>
+<HEAD>
+<TITLE> Cricket Game </TITLE>
+<form>
+<center>
+<IMG NAME="arithmetic"SRC="Wallpaper.jpg">
+<BR>
+<input type="button" value="RUN GAME" onClick="main();">
+<marquee><H2> Cricket Game </H2></marquee>
+<SCRIPT LANGUAGE="JavaScript"> main();</SCRIPT>
+<BODY BGCOLOR="ForestGreen">
+</center>
+</form>
+<SCRIPT LANGUAGE="JavaScript">
+
+var totalscore=0;  // This variable is keeps the record of number of runs scored by one (1st) batsman 
+var totalscore2=0; // This variable is keeps the record of number of runs scored by multiple batsman
+
+var totaltotalscore=0; // This variable helps calculate the sum of scores scored by all players
+var noofplayers=0; // This variable is an incremental counter which keeps a record of number of players played
+
+var strikerate=0; // This variable is used to do mathematic calculations to calculate the strike-rate ((totalscore/ballsr)*100) of all player 
+var average=0; // This variable is used to do mathematic calculations to calculate the average (totaltotalscore/noofplayers) of all player 
+var sixes=0; // This variable is an incremental counter which keeps a record of number of sixes played 
+var ballsr=0; // This variable is keeps the record of number of balls played per batsman
+
+
+var player1name; // This variable record player 1's name
+var newplayernames; // This variable record players after 1 names
+var multipleplayerloop; // This variable is used in while loop which enables the program to work for multiple players
+var attempt;
+var playernames= []
+var playerscores= []
+var playerballs= []
+var playerstrikerates= []
+var playersixes= []
+var playernum;
+
+function main ()
+{
+document.open();
+document.write('<center><img src="ballpicture.jpg" width="300px" height="250px"></center>');
+document.write('<center><input type="button" value="Instructions" onClick="instructions();"></center>');
+document.write('<center><input type="button" value="Play" onClick="gameplay();"></center>')
+document.write('<marquee><H2> Automatic Cricket 17 </H2></marquee>')
+document.write('<BODY BGCOLOR="Gold">')
+}
+
+function  gameplay()
+{
+player1name=prompt("What is player 1's name?");
+playernames[0]=player1name
+
+var ball;
+for (ball=1;ball<=30;ball=ball+1)  
+{
+var randomnumberbat=Math.floor((Math.random()*6)+1)
+	document.write("<BR>");
+    document.write("Runs scored from ball "+ball+" = "+randomnumberbat);
+	document.write("<BR>");
+	totalscore=totalscore+randomnumberbat
+	ballsr=ball // ballsr is used to keep a track of the balls played by a single batsman as the ball variable changes to 30 once the player is out 
+	if (randomnumberbat=="6") // This if statement inside the for loop is to calculate sixes (if the batsmen's random number is 6 it addes it to the variable.
+	sixes=sixes+1 
+	
+	
+var randomnumberball=Math.floor((Math.random()*6)+1)
+    document.write("Computer number = "+randomnumberball);
+	document.write("<BR>");
+	document.write("<BR>");
+	if (randomnumberbat==randomnumberball)
+	ball=30 // This assign statment is used to end the for loop 
+}
+document.write("<h3> OUT </h3>");
+document.write("<BR>");
+totalscore=totalscore-randomnumberbat // This statement outside the for loop is to substrate number of runs scored of the ball in which the player got out
+
+totaltotalscore=totalscore
+strikerate=(totalscore/ballsr)*100
+strikerate=
+
+noofplayers=noofplayers+1
+if (randomnumberbat=="6") // This if statement outside the for loop is to substrate a six scored of the ball in which the player got out.
+sixes=sixes-1 
+
+
+playerscores[0]=totalscore 
+playerballs[0]=ballsr
+playerstrikerates[0]=strikerate
+playersixes[0]=sixes
+
+document.write(" Player " +noofplayers)
+document.write(": " +player1name+ " scored " +totalscore);
+document.write(" in " +ballsr);
+document.write(" with a strike rate of " +strikerate);
+document.write(" and " +sixes+ " six(s)");
+
+document.write("<BR>");
+document.write("<BR>");
+document.write("=========================================");
+
+
+attempt=prompt("Is there another player? [Y] [N]")
+playernum=1
+while (attempt=="Y")
+{
+	newplayername=prompt("What is the next players name?");
+	playernames[playernum] = newplayername
+	multipleplayerloop="Y" 
+	while (multipleplayerloop=="Y")
+	{
+	sixes=0
+	totalscore2=0
+	
+
+
+	for (ball=1;ball<=30;ball=ball+1)  
+	{
+	var randomnumberbat=Math.floor((Math.random()*6)+1)
+		document.write("<BR>");
+		document.write("Runs scored from ball "+ball+" = "+randomnumberbat);
+		document.write("<BR>");
+		totalscore2=totalscore2+randomnumberbat
+		ballsr=ball
+		if (randomnumberbat=="6")
+		sixes=sixes+1
+
+	var randomnumberball=Math.floor((Math.random()*6)+1)
+		document.write("Computer number = "+randomnumberball);
+		document.write("<BR>");
+		document.write("<BR>");
+		if (randomnumberbat==randomnumberball)
+		ball=30
+	}
+	document.write("<h3> OUT </h3>");
+	document.write("<BR>");
+	totalscore2=totalscore2-randomnumberbat
+	strikerate=(totalscore2/ballsr)*100
+	noofplayers=noofplayers+1
+	if (randomnumberbat=="6")
+	sixes=sixes-1
+
+	totaltotalscore=totaltotalscore+totalscore2
+	document.write(" Player " +noofplayers)
+	document.write(": " +newplayername+ " scored " +totalscore2);
+	document.write(" in " +ballsr);
+	document.write(" with a strike rate of " +strikerate);
+	document.write(" and " +sixes+ " six(s)");
+
+	document.write("<BR>");
+	document.write("<BR>");
+	document.write("=========================================");
+
+	document.write('<CENTER>'+'<input name="Play Again?" type="button" value="Play Again?" onclick=gameplay()>'+'</CENTER>');
+	document.write('<CENTER>'+'<input name="Back" type="button" value="Back" onclick=main()>'+'</CENTER>');
+	multipleplayerloop="N"
+
+	}
+	playerscores[playernum] = totalscore2
+	playerstrikerates[playernum] = strikerate
+	playerballs[playernum] = ballsr
+	playersixes[playernum] = sixes
+	playernum=playernum+1
+
+attempt=prompt("Is there another player? ([Y],[N]")
+}
+document.write("<BR>");
+document.write("<b> All players combined scored </b>" +totaltotalscore);
+average=totaltotalscore/noofplayers
+document.write("<b> with average score being </b>" +average);
+document.write('<CENTER>'+'<input name="Show Leader Board" type="button" value="Show Leader Board" onclick=leaderboard()>'+'</CENTER>');
+}
+
+function  leaderboard()
+{
+document.write("<H2> LEADER BOARD </H2>");
+	document.write("(Highest to lowest runs score)");
+	document.write("<BR>");
+	document.write("<BR>");
+	
+	
+	var playerstats = []
+	for (var i=0;i<playernum; i=i+1)
+	{
+	playerstats.push({playernames: playernames[i], playerscores: playerscores[i], playerballs: playerballs[i], playerstrikerates: playerstrikerates[i], playersixes: playersixes[i]})
+	playerstats.sort(function(a,b){return b.playerscores -a.playerscores})
+	}
+	
+	for (var i=0;i<playernum; i=i+1)
+	{
+	document.write ("<B> Player Name: </B>"+playerstats[i].playernames+"<B> Runs: </B>"+playerstats[i].playerscores+"<B> Balls: </B>"+playerstats[i].playerballs+"<B> Strike-rate: </B>"+playerstats[i].playerstrikerates+"<B> Sixes: </B>"+playerstats[i].playersixes)
+	document.write("<BR>");
+	}
+}
+function  instructions()
+{
+document.write("Welcome to Automatic Cricket 17");
+document.write("<BR>");
+document.write("<BR>");
+document.write("1. Firstly enter the player 1's name.");
+document.write("<BR>");
+document.write("2. A random number between 1 to 6 will be generated and displayed which will be amount of runs scored of the ball.");
+document.write("<BR>");
+document.write("3. Another random number between 1 to 6 will be generated and displayed which will be the computer number.");
+document.write("<BR>");
+document.write("4. If 1st random number matches the 2nd random number then the batsman is declared OUT! and his/her stats are displayed.");
+document.write("<BR>");
+document.write("5. If 1st random number is dissimilar to the 2nd random number then the batsman continue batting until declared out.");
+document.write("<BR>");
+document.write("6. The runs of one batsman from each ball is added on, displaying his/her total score once the player's innings is over.");
+document.write("<BR>");
+document.write("7. The maximum numbers of ball a player can play are 30 balls which are equivalent to 5 overs.");
+document.write("<BR>");
+document.write("8. The aim of a batsman to score as many runs as possible without getting out in 30 balls.");
+document.write("<BR>");
+document.write("9. After the player is out. There is an option of continue playing with a new player.");
+document.write("<BR>");
+document.write("10. When there are no more new player. The game ends. The leaderboard of the players played will be displayed.");
+document.write("<BR>");
+document.write('<CENTER>'+'<input name="Back" type="button" value="Back" onclick=main()>'+'</CENTER>');
+}
+</SCRIPT>
+</HEAD>
+<BODY>
+</BODY>
+</HTML>	
